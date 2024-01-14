@@ -1,0 +1,38 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' ./src/server.ts",
+    "build": "tsc",
+    "lint": "eslint"
+  },
+  "author": "Carlos Liao",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "eslint-config-prettier": "^9.1.0",
+    "express": "^4.18.2",
+    "firebase-admin": "^12.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.10.7",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "eslint": "^8.56.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^3.0.2",
+    "prettier": "3.1.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
