@@ -1,7 +1,7 @@
-import express from 'express'
+import { Router } from 'express'
 import booksRoutes from './books.routes'
 
-const router = express.Router()
+const router = Router()
 
 router.use('/books', booksRoutes)
 
