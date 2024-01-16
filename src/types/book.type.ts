@@ -1,10 +1,8 @@
 export interface Book {
   author: string
-  country: string
+  categories: string[]
   imageLink: string
-  language: string
   link: string
-  pages: number
   title: string
   year: number
 }
