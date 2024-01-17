@@ -34,6 +34,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^3.0.2",
     "prettier": "3.1.1",
+    "supabase": "^1.131.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
