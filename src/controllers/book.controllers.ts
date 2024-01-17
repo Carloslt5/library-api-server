@@ -9,11 +9,26 @@ export const getBooks = async (req: Request, res: Response, next: NextFunction):
     next()
   }
 }
+
 export const getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { id } = req.params
   try {
     const result = await bookmodel.getById({ id })
     res.json(result)
+  } catch (error) {
+    next()
+  }
+}
+
+export const createBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  console.log('---------', req.body)
+  try {
+    // const result = await bookmodel.createBook({ input })
+    res.json('result')
   } catch (error) {
     next()
   }
