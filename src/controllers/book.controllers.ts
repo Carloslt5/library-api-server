@@ -6,7 +6,7 @@ export const getBooks = async (req: Request, res: Response, next: NextFunction):
     const result = await bookmodel.getAll()
     res.json(result)
   } catch (error) {
-    // next()
+    next()
   }
 }
 

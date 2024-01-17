@@ -1,16 +1,19 @@
+import { ModelError } from '../types/ModelError.type'
 import { type BookID, type Book, type BookNotID } from '../types/book.type'
 import { createClient } from '@supabase/supabase-js'
-import { ModelError } from './error.t'
+
 
 const supabaseUrl = process.env.SUPABASE_URL ?? 'http://localhost:54321'
-const supabaseKey = process.env.SUPABASE_KEY ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+const supabaseKey =
+  process.env.SUPABASE_KEY ??
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
 const db = createClient(supabaseUrl, supabaseKey)
 
 class BookModel {
   async getAll(): Promise<Book[]> {
-    const  result  = await db.from('books').select('*')
-  
-    console.log({result})
+    const result = await db.from('books').select('*')
+
+    console.log({ result })
     return result.data ?? []
   }
 
@@ -29,7 +32,7 @@ class BookModel {
     const id = crypto.randomUUID()
     const newBook = { ...input, id }
     const result = await db.from('books').insert([newBook]).select()
-    console.log({result})
+    console.log({ result })
     return result.data
   }
 

@@ -1,5 +1,6 @@
 import { type Request, type Response, type NextFunction, type Express } from 'express'
-import { ModelError } from '../models/error.t'
+import { ModelError } from '../types/ModelError.type'
+
 
 export default (app: Express): void => {
   app.use((req, res, next) => {
