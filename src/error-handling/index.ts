@@ -1,4 +1,5 @@
 import { type Request, type Response, type NextFunction, type Express } from 'express'
+import { ModelError } from '../models/error.t'
 
 export default (app: Express): void => {
   app.use((req, res, next) => {
@@ -7,6 +8,11 @@ export default (app: Express): void => {
 
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error('ERROR', req.method, req.path, err)
+
+    if (err instanceof ModelError) {
+      res.status(err.status).json({ status: err.status, message: err.message })
+      return
+    }
 
     if (err.name === 'UnauthorizedError') {
       res.status(401).json({ message: 'No authorization token was found' })

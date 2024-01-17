@@ -6,17 +6,18 @@ export const getBooks = async (req: Request, res: Response, next: NextFunction):
     const result = await bookmodel.getAll()
     res.json(result)
   } catch (error) {
-    next()
+    // next()
   }
 }
 
 export const getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { id } = req.params
   try {
+    console.log('---------AQUI')
     const result = await bookmodel.getById({ id })
     res.json(result)
   } catch (error) {
-    next()
+    next(error)
   }
 }
 
@@ -25,11 +26,24 @@ export const createBook = async (
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
-  const input =  req.body
+  const input = req.body
   try {
     const result = await bookmodel.createBook({ input })
     res.json(result)
   } catch (error) {
     next()
+  }
+}
+export const deleteBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  const { id } = req.params
+  try {
+    await bookmodel.deleteBook({ id })
+    res.json({ success: true, message: 'Book deleted' })
+  } catch (error) {
+    next(error)
   }
 }
