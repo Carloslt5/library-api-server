@@ -1,4 +1,5 @@
 export interface Book {
+  id: string
   author: string
   categories: string[]
   imageLink: string
@@ -6,3 +7,5 @@ export interface Book {
   title: string
   year: number
 }
+
+export type BookId = Pick<Book, 'id'>
