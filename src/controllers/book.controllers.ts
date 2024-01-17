@@ -25,10 +25,10 @@ export const createBook = async (
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
-  console.log('---------', req.body)
+  const input =  req.body
   try {
-    // const result = await bookmodel.createBook({ input })
-    res.json('result')
+    const result = await bookmodel.createBook({ input })
+    res.json(result)
   } catch (error) {
     next()
   }
