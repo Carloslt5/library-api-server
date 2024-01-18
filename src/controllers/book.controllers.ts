@@ -30,7 +30,7 @@ export const createBook = async (
     const result = await bookmodel.createBook({ input })
     res.json(result)
   } catch (error) {
-    next()
+    next(error)
   }
 }
 export const deleteBook = async (

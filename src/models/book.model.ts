@@ -32,7 +32,9 @@ class BookModel {
     const id = crypto.randomUUID()
     const newBook = { ...input, id }
     const result = await db.from('books').insert([newBook]).select()
-    console.log({ result })
+    if (result.error !== null) {
+      throw new ModelError({ message: result.error.message, status: result.status })
+    }
     return result.data
   }
 
