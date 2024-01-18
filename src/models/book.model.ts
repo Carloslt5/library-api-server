@@ -2,7 +2,6 @@ import { ModelError } from '../types/ModelError.type'
 import { type BookID, type Book, type BookNotID } from '../types/book.type'
 import { createClient } from '@supabase/supabase-js'
 
-
 const supabaseUrl = process.env.SUPABASE_URL ?? 'http://localhost:54321'
 const supabaseKey =
   process.env.SUPABASE_KEY ??
@@ -12,9 +11,10 @@ const db = createClient(supabaseUrl, supabaseKey)
 class BookModel {
   async getAll(): Promise<Book[]> {
     const result = await db.from('books').select('*')
-
-    console.log({ result })
-    return result.data ?? []
+    if (result.error !== null) {
+      throw new ModelError({ message: result.error.message, status: result.status })
+    }
+    return result.data
   }
 
   async getById({ id }: BookID): Promise<Book[] | null> {

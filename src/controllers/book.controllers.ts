@@ -6,15 +6,15 @@ export const getBooks = async (req: Request, res: Response, next: NextFunction):
     const result = await bookmodel.getAll()
     res.json(result)
   } catch (error) {
-    next()
+    next(error)
   }
 }
 
 export const getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { id } = req.params
   try {
-    console.log('---------AQUI')
     const result = await bookmodel.getById({ id })
+    // console.log('---------AQUI', result)
     res.json(result)
   } catch (error) {
     next(error)
