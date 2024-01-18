@@ -27,8 +27,8 @@ export const createBook = async (
 ): Promise<void> => {
   const input = req.body
   try {
-    const result = await bookmodel.createBook({ input })
-    res.json(result)
+    await bookmodel.createBook({ input })
+    res.json({ success: true, message: 'Book created' })
   } catch (error) {
     next(error)
   }

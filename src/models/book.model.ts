@@ -17,7 +17,7 @@ class BookModel {
     return result.data
   }
 
-  async getById({ id }: BookID): Promise<Book[] | null> {
+  async getById({ id }: BookID): Promise<Book[]> {
     const result = await db
       .from('books')
       .select('title, author, categories, imageLink, link, title, year, id')
@@ -28,14 +28,14 @@ class BookModel {
     return result.data
   }
 
-  async createBook({ input }: { input: BookNotID }): Promise<Book[] | null> {
+  async createBook({ input }: { input: BookNotID }): Promise<boolean> {
     const id = crypto.randomUUID()
     const newBook = { ...input, id }
     const result = await db.from('books').insert([newBook]).select()
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
-    return result.data
+    return true
   }
 
   async deleteBook({ id }: BookID): Promise<boolean> {
