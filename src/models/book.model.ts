@@ -1,5 +1,6 @@
+import { type Book, type BookID, type BookNotID } from '../schema/book.schema'
 import { ModelError } from '../types/ModelError.type'
-import { type BookID, type Book, type BookNotID } from '../types/book.type'
+
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.SUPABASE_URL ?? 'http://localhost:54321'
