@@ -14,7 +14,6 @@ export const getById = async (req: Request, res: Response, next: NextFunction): 
   const { id } = req.params
   try {
     const result = await bookmodel.getById({ id })
-    // console.log('---------AQUI', result)
     res.json(result)
   } catch (error) {
     next(error)
