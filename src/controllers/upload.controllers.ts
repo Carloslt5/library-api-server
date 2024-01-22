@@ -1,24 +1,22 @@
 import { type RequestHandler } from 'express'
 import { db } from '../models/book.model'
 import fs from 'fs/promises'
+import { ModelError } from '../types/ModelError.type'
 
 export const uploadFile: RequestHandler = async (req, res, next) => {
   try {
+    if (req.file === undefined) {
+      throw new ModelError({ message: 'No file was provided', status: 204 })
+    }
     if (req.file !== undefined) {
       const imageData = req.file
       const storagePath = `public/${imageData.filename}`
       const fileContent = await fs.readFile(imageData.path)
-      await db.storage.from('books').upload(storagePath, fileContent, {
-        upsert: false,
-        contentType: imageData.mimetype,
-      })
-      const { data } = db.storage.from('books').getPublicUrl(`public/${imageData.filename}`)
+      await db.storage.from('books').upload(storagePath, fileContent)
+      const { data } = db.storage.from('books').getPublicUrl(storagePath)
       res.json(data)
-    } else {
-      res.status(400).send('No se proporcionó ningún archivo')
     }
   } catch (error) {
-    console.error('Error al cargar la imagen:', error)
-    next(error)
+    throw new ModelError({ message: 'Error upload image', status: 400 })
   }
 }
