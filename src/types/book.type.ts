@@ -1,10 +1,12 @@
-export interface Book {
-  author: string
-  country: string
-  imageLink: string
-  language: string
-  link: string
-  pages: number
-  title: string
-  year: number
-}
+// export interface Book {
+//   id: string
+//   author: string
+//   categories: string
+//   imageLink: string
+//   link: string
+//   title: string
+//   year: number
+// }
+
+// export type BookID = Pick<Book, 'id'>
+// export type BookNotID = Omit<Book, 'id'>

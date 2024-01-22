@@ -1,18 +1,20 @@
-import express from 'express'
+import { Router } from 'express'
 import {
   createBook,
-  getBooks,
-  editBook,
   deleteBook,
-  getOneBook,
-} from '../controllers/books.controllers'
+  getBooks,
+  getById,
+  updateBook,
+} from '../controllers/book.controllers'
+import { schemaValidation } from '../middlewares/schema.validation'
+import { BookSchema } from '../schema/book.schema'
 
-const router = express.Router()
+const router = Router()
 
 router.get('/', getBooks)
-router.get('/:id', getOneBook)
-router.post('/create', createBook)
-router.put('/edit/:id', editBook)
-router.delete('/delete/:id', deleteBook)
+router.get('/:id', getById)
+router.post('/create', schemaValidation(BookSchema), createBook)
+router.post('/:id/edit', schemaValidation(BookSchema), updateBook)
+router.delete('/:id', deleteBook)
 
 export default router
