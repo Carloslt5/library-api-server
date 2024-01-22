@@ -9,7 +9,7 @@ export const uploadFile: RequestHandler = async (req, res, next) => {
       const storagePath = `public/${imageData.filename}`
       const fileContent = await fs.readFile(imageData.path)
       await db.storage.from('books').upload(storagePath, fileContent, {
-        upsert: true,
+        upsert: false,
         contentType: imageData.mimetype,
       })
       const { data } = db.storage.from('books').getPublicUrl(`public/${imageData.filename}`)

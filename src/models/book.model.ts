@@ -20,7 +20,7 @@ class BookModel {
   async getById({ id }: BookID): Promise<Book[]> {
     const result = await db
       .from('books')
-      .select('title, author, categories, imageLink, link, title, year, id')
+      .select('title, author, categories, imageURL, link, title, year, id')
       .eq('id', id)
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })

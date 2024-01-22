@@ -4,7 +4,7 @@ export const BookSchema = z.object({
   id: z.string().optional(),
   author: z.string().min(5, 'Author requires a minimum of 5 characters').trim(),
   categories: z.string().trim(),
-  imageLink: z.string().url({ message: 'Imagen link must be a valid URL' }).trim(),
+  imageURL: z.string().url().trim(),
   link: z.string().url({ message: 'link must be a valid URL' }).trim(),
   title: z.string().min(1, 'Title requires a minimum of 1 characters').trim(),
   year: z.number().int().positive(),
