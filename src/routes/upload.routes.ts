@@ -1,11 +1,10 @@
 import { Router } from 'express'
 import { upload } from '../middlewares/uploader.middlewares'
+import { uploadFile } from '../controllers/upload.controllers'
 
 const router = Router()
 
-router.post('/', upload.single('imageData'), (req, res) => {
-  console.log('-------', req.file)
-  res.send('holis')
-})
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+router.post('/', upload.single('imageData'), uploadFile)
 
 export default router
