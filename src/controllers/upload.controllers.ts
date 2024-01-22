@@ -2,7 +2,7 @@ import { type RequestHandler } from 'express'
 import { db } from '../models/book.model'
 import fs from 'fs/promises'
 
-export const uploadFile: RequestHandler = async (req, res) => {
+export const uploadFile: RequestHandler = async (req, res, next) => {
   try {
     if (req.file !== undefined) {
       const imageData = req.file
@@ -13,12 +13,12 @@ export const uploadFile: RequestHandler = async (req, res) => {
         contentType: imageData.mimetype,
       })
       const { data } = db.storage.from('books').getPublicUrl(`public/${imageData.filename}`)
-
-      res.send(data)
+      res.json(data)
     } else {
       res.status(400).send('No se proporcionó ningún archivo')
     }
   } catch (error) {
     console.error('Error al cargar la imagen:', error)
+    next(error)
   }
 }
