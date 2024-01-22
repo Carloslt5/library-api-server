@@ -29,6 +29,18 @@ export const createBook: RequestHandler = async (req, res, next): Promise<void> 
     next(error)
   }
 }
+
+export const updateBook: RequestHandler = async (req, res, next) => {
+  const id = req.params
+  const input = req.body
+  try {
+    await bookmodel.updateBook({ id, input })
+    res.json({ success: true, message: 'Book updated' })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const deleteBook: RequestHandler = async (req, res, next): Promise<void> => {
   const { id } = req.params
   try {

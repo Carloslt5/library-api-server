@@ -1,7 +1,7 @@
 import z from 'zod'
 
 export const BookSchema = z.object({
-  id: z.string().optional(),
+  id: z.string().uuid().optional(),
   author: z.string().min(5, 'Author requires a minimum of 5 characters').trim(),
   categories: z.string().trim(),
   imageURL: z.string().url().trim(),

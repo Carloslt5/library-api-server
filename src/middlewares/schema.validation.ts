@@ -3,7 +3,6 @@ import { type AnyZodObject } from 'zod'
 
 export const schemaValidation =
   (schema: AnyZodObject) => (req: Request, res: Response, next: NextFunction) => {
-    console.log('en el mid de validacion')
     try {
       schema.parse(req.body)
       next()
