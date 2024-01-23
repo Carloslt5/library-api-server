@@ -9,7 +9,6 @@ npm install
 2. Init api-server
 
 ```
-npm build
 npm start
 ```
 
