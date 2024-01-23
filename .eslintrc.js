@@ -11,14 +11,11 @@ module.exports = {
       },
       files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
-        sourceType: 'script',
+        ecmaVersion: 2022,
+        sourceType: 'module',
       },
     },
   ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
   ignorePatterns: ['**/*.eslintrc.js'],
   rules: {
     '@typescript-eslint/no-misused-promises': 'off',
