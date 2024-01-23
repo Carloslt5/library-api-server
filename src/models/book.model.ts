@@ -17,7 +17,7 @@ class BookModel {
     return result.data
   }
 
-  async getById({ id }: { id: BookID }): Promise<any> {
+  async getById({ id }: { id: BookID }): Promise<Book[]> {
     const result = await db.from('books').select().eq('id', id)
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })
