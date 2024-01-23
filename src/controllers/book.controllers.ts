@@ -2,7 +2,7 @@ import { type RequestHandler } from 'express'
 import { bookmodel } from '../models/book.model'
 import { type BookNotID } from '../schema/book.schema'
 
-export const getBooks: RequestHandler = async (req, res, next): Promise<void> => {
+export const getBooks: RequestHandler = async (req, res, next) => {
   try {
     const result = await bookmodel.getAll()
     res.json(result)
@@ -11,7 +11,7 @@ export const getBooks: RequestHandler = async (req, res, next): Promise<void> =>
   }
 }
 
-export const getById: RequestHandler = async (req, res, next): Promise<void> => {
+export const getById: RequestHandler = async (req, res, next) => {
   const { id } = req.params
   try {
     const result = await bookmodel.getById({ id })
@@ -21,7 +21,7 @@ export const getById: RequestHandler = async (req, res, next): Promise<void> => 
   }
 }
 
-export const createBook: RequestHandler = async (req, res, next): Promise<void> => {
+export const createBook: RequestHandler = async (req, res, next) => {
   const input: BookNotID = req.body
   try {
     await bookmodel.createBook({ input })
@@ -42,7 +42,7 @@ export const updateBook: RequestHandler = async (req, res, next) => {
   }
 }
 
-export const deleteBook: RequestHandler = async (req, res, next): Promise<void> => {
+export const deleteBook: RequestHandler = async (req, res, next) => {
   const { id } = req.params
   try {
     await bookmodel.deleteBook({ id })
