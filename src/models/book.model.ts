@@ -9,7 +9,7 @@ const supabaseKey =
 export const db = createClient(supabaseUrl, supabaseKey)
 
 class BookModel {
-  async getAll(): Promise<any> {
+  async getAll(): Promise<Book[]> {
     const result = await db.from('books').select()
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })
@@ -17,7 +17,7 @@ class BookModel {
     return result.data
   }
 
-  async getById({ id }: BookID): Promise<Book[]> {
+  async getById({ id }: { id: BookID }): Promise<any> {
     const result = await db.from('books').select().eq('id', id)
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })
@@ -26,8 +26,8 @@ class BookModel {
   }
 
   async createBook({ input }: { input: BookNotID }): Promise<boolean> {
-    const id = crypto.randomUUID()
-    const newBook = { ...input, id }
+    const id: BookID = crypto.randomUUID()
+    const newBook: Book = { ...input, id }
     const result = await db.from('books').insert([newBook]).select()
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })
@@ -36,14 +36,14 @@ class BookModel {
   }
 
   async updateBook({ id, input }: { id: BookID; input: BookNotID }): Promise<boolean> {
-    const result = await db.from('books').update([input]).eq('id', id.id)
+    const result = await db.from('books').update([input]).eq('id', id)
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
     return true
   }
 
-  async deleteBook({ id }: BookID): Promise<boolean> {
+  async deleteBook({ id }: { id: BookID }): Promise<boolean> {
     const result = await db.from('books').delete().eq('id', id)
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })

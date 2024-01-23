@@ -7,14 +7,14 @@ import {
   updateBook,
 } from '../controllers/book.controllers'
 import { schemaValidation } from '../middlewares/schema.validation'
-import { BookSchema } from '../schema/book.schema'
+import { CreateBookSchema, OneBookSchema, UpdateBookSchema } from '../schema/book.schema'
 
 const router = Router()
 
 router.get('/', getBooks)
-router.get('/:id', getById)
-router.post('/create', schemaValidation(BookSchema), createBook)
-router.post('/:id/edit', schemaValidation(BookSchema), updateBook)
-router.delete('/:id', deleteBook)
+router.get('/:id', schemaValidation(OneBookSchema), getById)
+router.post('/create', schemaValidation(CreateBookSchema), createBook)
+router.put('/edit/:id', schemaValidation(UpdateBookSchema), updateBook)
+router.delete('/:id', schemaValidation(OneBookSchema), deleteBook)
 
 export default router

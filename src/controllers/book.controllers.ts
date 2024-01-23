@@ -1,5 +1,6 @@
 import { type RequestHandler } from 'express'
 import { bookmodel } from '../models/book.model'
+import { type BookNotID } from '../schema/book.schema'
 
 export const getBooks: RequestHandler = async (req, res, next): Promise<void> => {
   try {
@@ -21,7 +22,7 @@ export const getById: RequestHandler = async (req, res, next): Promise<void> => 
 }
 
 export const createBook: RequestHandler = async (req, res, next): Promise<void> => {
-  const input = req.body
+  const input: BookNotID = req.body
   try {
     await bookmodel.createBook({ input })
     res.json({ success: true, message: 'Book created' })
@@ -31,8 +32,8 @@ export const createBook: RequestHandler = async (req, res, next): Promise<void> 
 }
 
 export const updateBook: RequestHandler = async (req, res, next) => {
-  const id = req.params
-  const input = req.body
+  const { id } = req.params
+  const input: BookNotID = req.body
   try {
     await bookmodel.updateBook({ id, input })
     res.json({ success: true, message: 'Book updated' })
