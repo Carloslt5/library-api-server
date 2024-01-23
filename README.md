@@ -18,7 +18,8 @@ npm start
 - Nodejs
 - ExpressJS
 - TypeScript
-- Firebase Storage
+- Zod schema validation
+- Supabase (Database and Storage)
 
 ## Books Routes
 
@@ -31,3 +32,11 @@ Base URL `/api/books`
 | POST        | `/create`     | Create a new book    |
 | PUT         | `/edit/:id`   | Edit book            |
 | DELETE      | `/delete/:id` | Add your favourites  |
+
+## Upload File Routes
+
+Base URL `/api/upload`
+
+| HTTP Method | URI path | Description                     |
+| ----------- | -------- | ------------------------------- |
+| POST        | `/`      | Upload file to Supabase Storage |
