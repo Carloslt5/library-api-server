@@ -18,6 +18,7 @@ npm start
 - ExpressJS
 - TypeScript
 - Zod schema validation
+- Testing with Jest
 - Supabase (Database and Storage)
 
 ## Books Routes
