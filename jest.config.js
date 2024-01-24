@@ -1,4 +1,4 @@
-const config = {
+module.exports = {
   // Test all files either suffixed with "-test.js", "-test.jsx", "-test.ts", "-test.tsx", or
   // having ".test.js", ".test.jsx", ".test.ts", ".test.tsx" extensions
   testRegex: '.*[-.]test\\.(js|ts)x?$',
@@ -7,4 +7,3 @@ const config = {
   },
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 }
-export default config
