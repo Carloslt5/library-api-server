@@ -7,7 +7,7 @@
     "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' ./src/server.ts",
     "build": "tsc",
     "lint": "eslint",
-    "test": "jest --config ./jest.config.js"
+    "test": "jest --config ./jest.config.js --watch"
   },
   "author": "Carlos Liao",
   "license": "ISC",

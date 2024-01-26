@@ -1,8 +1,6 @@
-import { Request, Response } from 'express'
+import { type Request, type Response } from 'express'
 import { getBooks } from './book.controllers'
 import { bookmodel } from '../models/book.model'
-
-jest.mock('../models/book.model')
 
 const mockBooks = [
   {
@@ -27,11 +25,16 @@ const mockBooks = [
   },
 ]
 
-const req = {} as Request
-const res = {
-  status: jest.fn().mockReturnThis(),
-  json: jest.fn(),
-} as unknown as Response
+jest.mock('../models/book.model', () => {
+  return {
+    bookmodel: {
+      getAll: jest.fn(() => mockBooks),
+      getById: jest.fn(() => [mockBooks[0]]),
+    },
+  }
+})
+
+const res = {} as Response
 const next = jest.fn()
 
 describe('Books controllers', () => {
@@ -39,9 +42,15 @@ describe('Books controllers', () => {
     jest.clearAllMocks()
   })
 
+  beforeEach(() => {
+    res.status = jest.fn().mockReturnValue(res)
+    res.json = jest.fn().mockReturnValue(res)
+  })
+
   it('GET - should return books on successful request', async () => {
-    ;(bookmodel.getAll as jest.Mock).mockResolvedValueOnce(mockBooks)
+    const req = {} as Request
     await getBooks(req, res, next)
+
     expect(bookmodel.getAll).toHaveBeenCalledTimes(1)
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith(mockBooks)
