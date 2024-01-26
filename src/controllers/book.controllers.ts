@@ -25,10 +25,7 @@ export const createBook: RequestHandler = async (req, res, next) => {
   const input: BookNotID = req.body
   try {
     await bookmodel.createBook({ input })
-    res.status(200).json({
-      success: true,
-      message: 'Book created',
-    })
+    res.status(200).json({ success: true, message: 'Book created' })
   } catch (error) {
     next(error)
   }
@@ -38,14 +35,8 @@ export const updateBook: RequestHandler = async (req, res, next) => {
   const { id } = req.params
   const input: BookNotID = req.body
   try {
-    await bookmodel.updateBook({
-      id,
-      input,
-    })
-    res.json({
-      success: true,
-      message: 'Book updated',
-    })
+    await bookmodel.updateBook({ id, input })
+    res.status(200).json({ success: true, message: 'Book updated' })
   } catch (error) {
     next(error)
   }
@@ -55,10 +46,7 @@ export const deleteBook: RequestHandler = async (req, res, next) => {
   const { id } = req.params
   try {
     await bookmodel.deleteBook({ id })
-    res.json({
-      success: true,
-      message: 'Book deleted',
-    })
+    res.json({ success: true, message: 'Book deleted' })
   } catch (error) {
     next(error)
   }
