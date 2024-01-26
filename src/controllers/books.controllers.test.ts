@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { getBooks } from './book.controllers'
+import { getBooks, getById } from './book.controllers'
 import { bookmodel } from '../models/book.model'
 
 const mockBooks = [
@@ -54,6 +54,17 @@ describe('Books controllers', () => {
     expect(bookmodel.getAll).toHaveBeenCalledTimes(1)
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith(mockBooks)
+    expect(next).not.toHaveBeenCalled()
+  })
+
+  it('GET - should return one books by ID on successful request', async () => {
+    const req = { params: { id: mockBooks[0].id } } as unknown as Request
+    await getById(req, res, next)
+
+    expect(bookmodel.getById).toHaveBeenCalledTimes(1)
+    expect(bookmodel.getById).toHaveBeenCalledWith({ id: mockBooks[0].id })
+    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.json).toHaveBeenCalledWith([mockBooks[0]])
     expect(next).not.toHaveBeenCalled()
   })
 })
