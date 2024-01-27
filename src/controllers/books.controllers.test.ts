@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { createBook, getBooks, getById, updateBook } from './book.controllers'
+import { createBook, deleteBook, getBooks, getById, updateBook } from './book.controllers'
 import { bookmodel } from '../models/book.model'
 import { Book, BookNotID } from '../schema/book.schema'
 
@@ -40,6 +40,7 @@ jest.mock('../models/book.model', () => {
       getById: jest.fn(() => [mockBooks[0]]),
       createBook: jest.fn(),
       updateBook: jest.fn(),
+      deleteBook: jest.fn(),
     },
   }
 })
@@ -51,7 +52,6 @@ describe('Books controllers', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
-
   beforeEach(() => {
     res.status = jest.fn().mockReturnThis()
     res.json = jest.fn().mockReturnThis()
@@ -97,6 +97,17 @@ describe('Books controllers', () => {
     expect(bookmodel.updateBook).toHaveBeenCalledWith({ id: mockBooks[0].id, input: mockBookInput })
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book updated' })
+    expect(next).not.toHaveBeenCalled()
+  })
+
+  it('DELETE - should call bookmodel.deleteBook() on successful request', async () => {
+    const req = { params: { id: mockBooks[0].id } } as unknown as Request
+    await deleteBook(req, res, next)
+
+    expect(bookmodel.deleteBook).toHaveBeenCalledTimes(1)
+    expect(bookmodel.deleteBook).toHaveBeenCalledWith({ id: mockBooks[0].id })
+    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book deleted' })
     expect(next).not.toHaveBeenCalled()
   })
 })

@@ -46,7 +46,7 @@ export const deleteBook: RequestHandler = async (req, res, next) => {
   const { id } = req.params
   try {
     await bookmodel.deleteBook({ id })
-    res.json({ success: true, message: 'Book deleted' })
+    res.status(200).json({ success: true, message: 'Book deleted' })
   } catch (error) {
     next(error)
   }
