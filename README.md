@@ -1,3 +1,5 @@
+[![Node.js CI](https://github.com/Carloslt5/technical-bubbo-api-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/Carloslt5/technical-bubbo-api-server/actions/workflows/node.js.yml)
+
 ## technical-bubbo-api-server
 
 1. Install dependencies

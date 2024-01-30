@@ -33,7 +33,7 @@ describe('BookModel', () => {
   it('getAll should return an array of books', async () => {
     const result = await bookmodel.getAll()
 
-    expect(spyFrom).toHaveBeenCalledWith('books')
+    expect(spyFrom).toHaveBeenCalledWith('booksss')
     expect(result).toEqual(mockBooks)
     expect(Array.isArray(result)).toBe(true)
   })
