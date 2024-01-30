@@ -113,7 +113,7 @@ describe('Books controllers on successful request', () => {
 })
 
 describe('Books controllers on bad request', () => {
-  it('GET - call next() on bad request', async () => {
+  it('GET - .getAll call next() on bad request', async () => {
     const req = {} as Request
     bookmodel.getAll = jest.fn(() => {
       throw new Error()
@@ -121,6 +121,50 @@ describe('Books controllers on bad request', () => {
 
     await getBooks(req, res, next)
     expect(bookmodel.getAll).toHaveBeenCalledTimes(1)
+    expect(next).toHaveBeenCalledWith(expect.any(Error))
+  })
+
+  it('GET - .getById call next() on bad request', async () => {
+    const req = { params: { id: mockBooks[0].id } } as unknown as Request
+    bookmodel.getById = jest.fn(() => {
+      throw new Error()
+    })
+
+    await getById(req, res, next)
+    expect(bookmodel.getById).toHaveBeenCalledTimes(1)
+    expect(next).toHaveBeenCalledWith(expect.any(Error))
+  })
+
+  it('POST - .createBook call next() on bad request', async () => {
+    const req = { params: { id: mockBooks[0].id }, body: mockBookInput } as unknown as Request
+    bookmodel.createBook = jest.fn(() => {
+      throw new Error()
+    })
+
+    await createBook(req, res, next)
+    expect(bookmodel.createBook).toHaveBeenCalledTimes(1)
+    expect(next).toHaveBeenCalledWith(expect.any(Error))
+  })
+
+  it('PUT - .updateBook call next() on bad request', async () => {
+    const req = { params: { id: mockBooks[0].id }, body: mockBookInput } as unknown as Request
+    bookmodel.updateBook = jest.fn(() => {
+      throw new Error()
+    })
+
+    await updateBook(req, res, next)
+    expect(bookmodel.updateBook).toHaveBeenCalledTimes(1)
+    expect(next).toHaveBeenCalledWith(expect.any(Error))
+  })
+
+  it('DELETE - .deleteBook call next() on bad request', async () => {
+    const req = { params: { id: mockBooks[0].id } } as unknown as Request
+    bookmodel.deleteBook = jest.fn(() => {
+      throw new Error()
+    })
+
+    await deleteBook(req, res, next)
+    expect(bookmodel.deleteBook).toHaveBeenCalledTimes(1)
     expect(next).toHaveBeenCalledWith(expect.any(Error))
   })
 })
