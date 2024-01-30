@@ -11,7 +11,7 @@ export const db = createClient(supabaseUrl, supabaseKey)
 class BookModel {
   async getAll(): Promise<Book[]> {
     const result = await db.from('books').select()
-    if (result.error !== null) {
+    if (result.error) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
     return result.data
@@ -19,7 +19,7 @@ class BookModel {
 
   async getById({ id }: { id: BookID }): Promise<Book[]> {
     const result = await db.from('books').select().eq('id', id)
-    if (result.error !== null) {
+    if (result.error) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
     return result.data
