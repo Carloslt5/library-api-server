@@ -48,16 +48,16 @@ jest.mock('../models/book.model', () => {
 const res = {} as Response
 const next = jest.fn()
 
-describe('Books controllers', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-  beforeEach(() => {
-    res.status = jest.fn().mockReturnThis()
-    res.json = jest.fn().mockReturnThis()
-  })
+afterEach(() => {
+  jest.clearAllMocks()
+})
+beforeEach(() => {
+  res.status = jest.fn().mockReturnThis()
+  res.json = jest.fn().mockReturnThis()
+})
 
-  it('GET - should call bookmodel.getAll() & return books on successful request', async () => {
+describe('Books controllers on successful request', () => {
+  it('GET - should call bookmodel.getAll() & return books', async () => {
     const req = {} as Request
     await getBooks(req, res, next)
 
@@ -67,7 +67,7 @@ describe('Books controllers', () => {
     expect(next).not.toHaveBeenCalled()
   })
 
-  it('GET - should call bookmodel.getById() & return one books by ID on successful request', async () => {
+  it('GET - should call bookmodel.getById() & return one books by ID', async () => {
     const req = { params: { id: mockBooks[0].id } } as unknown as Request
     await getById(req, res, next)
 
@@ -78,7 +78,7 @@ describe('Books controllers', () => {
     expect(next).not.toHaveBeenCalled()
   })
 
-  it('POST - should call bookmodel.createBook() on successful request', async () => {
+  it('POST - should call bookmodel.createBook()', async () => {
     const req = { id: mockBooks[0].id, body: mockBookInput } as unknown as Request
     await createBook(req, res, next)
 
@@ -89,7 +89,7 @@ describe('Books controllers', () => {
     expect(next).not.toHaveBeenCalled()
   })
 
-  it('PUT - should call bookmodel.updateBook() on successful request', async () => {
+  it('PUT - should call bookmodel.updateBook()', async () => {
     const req = { params: { id: mockBooks[0].id }, body: mockBookInput } as unknown as Request
     await updateBook(req, res, next)
 
@@ -100,7 +100,7 @@ describe('Books controllers', () => {
     expect(next).not.toHaveBeenCalled()
   })
 
-  it('DELETE - should call bookmodel.deleteBook() on successful request', async () => {
+  it('DELETE - should call bookmodel.deleteBook()', async () => {
     const req = { params: { id: mockBooks[0].id } } as unknown as Request
     await deleteBook(req, res, next)
 
@@ -109,5 +109,18 @@ describe('Books controllers', () => {
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book deleted' })
     expect(next).not.toHaveBeenCalled()
+  })
+})
+
+describe('Books controllers on bad request', () => {
+  it('GET - call next() on bad request', async () => {
+    const req = {} as Request
+    bookmodel.getAll = jest.fn(() => {
+      throw new Error()
+    })
+
+    await getBooks(req, res, next)
+    expect(bookmodel.getAll).toHaveBeenCalledTimes(1)
+    expect(next).toHaveBeenCalledWith(expect.any(Error))
   })
 })
