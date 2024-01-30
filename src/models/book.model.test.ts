@@ -1,26 +1,6 @@
+import { mockBookInput, mockBooks } from '../const/mockBooks'
 import { Book } from '../schema/book.schema'
 import { bookmodel, db } from './book.model'
-
-const mockBooks: Book[] = [
-  {
-    id: '46610b86-8b18-4f92-884d-011974aaf7db',
-    title: "The Hitchhiker's Guide to the Galaxy",
-    author: 'Douglas Adams',
-    categories: 'Science Fiction',
-    link: 'https://example.com/hitchhikers-guide',
-    year: 1979,
-    imageURL: 'https://imagenURL.com',
-  },
-  {
-    id: '7427b02d-7046-49c6-b393-3b10f67b1cb9',
-    title: 'To Kill a Mockingbird',
-    author: 'Harper Lee',
-    categories: 'Fiction',
-    link: 'https://example.com/to-kill-a-mockingbird',
-    year: 1960,
-    imageURL: 'https://imagenURL.com',
-  },
-]
 
 jest.mock('@supabase/supabase-js', () => ({
   createClient: jest.fn(() => ({
@@ -55,12 +35,18 @@ describe('BookModel', () => {
 
     expect(spyFrom).toHaveBeenCalledWith('books')
     expect(result).toEqual(mockBooks)
+    expect(Array.isArray(result)).toBe(true)
   })
 
   it('getById should return a one book', async () => {
     const result = await bookmodel.getById({ id: mockBooks[0].id })
 
     expect(spyFrom).toHaveBeenCalledWith('books')
+    expect(Array.isArray(result)).toBe(true)
     expect(result).toEqual([mockBooks[0]])
   })
+
+  // it('createBook should return success request', async () => {
+  //   const result = await bookmodel.createBook({ input: mockBookInput })
+  // })
 })
