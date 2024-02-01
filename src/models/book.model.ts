@@ -28,15 +28,15 @@ class BookModel {
   async createBook({ input }: { input: BookNotID }): Promise<boolean> {
     const id: BookID = crypto.randomUUID()
     const newBook: Book = { ...input, id }
-    const result = await db.from('books').insert([newBook]).select()
-    if (result.error !== null) {
+    const result = await db.from('books').insert(newBook)
+    if (result.error) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
     return true
   }
 
   async updateBook({ id, input }: { id: BookID; input: BookNotID }): Promise<boolean> {
-    const result = await db.from('books').update([input]).eq('id', id)
+    const result = await db.from('books').update(input).eq('id', id)
     if (result.error !== null) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
