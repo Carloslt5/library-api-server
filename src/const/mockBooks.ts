@@ -31,10 +31,10 @@ export const mockBookInput: BookNotID = {
 }
 
 export const updateBookMock: BookNotID = {
-  title: 'Title update mock',
-  author: 'Author update mock',
-  categories: 'Categories update mock',
-  link: 'https://example.com/hitchhikers-guide',
+  title: 'Update mock',
+  author: 'Update mock',
+  categories: 'Updatemock',
+  link: 'https://UpdateMock.com/',
   year: 1111,
-  imageURL: 'https://imagenURL.com',
+  imageURL: 'https://UpdateMock.com',
 }

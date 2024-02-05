@@ -20,18 +20,16 @@ jest.mock('@supabase/supabase-js', () => ({
         update: jest.fn((input: BookNotID) => {
           return {
             eq: (key: keyof Book, value: string) => {
-              const findBookToUpdate = mockBooks.find((book) => book[key] === value)
-              // Update the book with new input
-              const updateBook = { ...findBookToUpdate, ...input }
-              // Update books list
-              const updatedBooksList = mockBooks.map((book) =>
-                book[key] === value ? updateBook : book,
-              )
-              return { data: updatedBooksList }
+              const indexToUpdate = mockBooks.findIndex((book) => book[key] === value)
+              if (indexToUpdate !== -1) {
+                // Update the book with new input directly in the array
+                mockBooks[indexToUpdate] = { ...mockBooks[indexToUpdate], ...input }
+              }
+              return { data: mockBooks }
             },
           }
         }),
-        delete: jest.fn((id: string) => {
+        delete: jest.fn(() => {
           return {
             eq: (key: keyof Book, value: string) => {
               const indexToDelete = mockBooks.findIndex((book) => book[key] === value)
@@ -86,7 +84,7 @@ describe('BookModel', () => {
     const result = await bookmodel.updateBook({ id: idToUpdate, input: updateBookMock })
 
     expect(spyFrom).toHaveBeenCalledWith('books')
-    //To Do expect mockBook[0] is update
+    expect([mockBooks[0]]).toEqual([{ id: idToUpdate, ...updateBookMock }])
     expect(mockBooks.length).toBe(3)
     expect(result).toBe(true)
   })

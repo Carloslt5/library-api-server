@@ -27,7 +27,7 @@ class BookModel {
 
   async createBook({ input }: { input: BookNotID }): Promise<boolean> {
     const id: BookID = crypto.randomUUID()
-    const newBook: Book = { ...input, id }
+    const newBook: Book = { id, ...input }
     const result = await db.from('books').insert(newBook)
     if (result.error) {
       throw new ModelError({ message: result.error.message, status: result.status })
@@ -45,6 +45,7 @@ class BookModel {
 
   async deleteBook({ id }: { id: BookID }): Promise<boolean> {
     const result = await db.from('books').delete().eq('id', id)
+
     if (result.error) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
