@@ -45,7 +45,7 @@ class BookModel {
 
   async deleteBook({ id }: { id: BookID }): Promise<boolean> {
     const result = await db.from('books').delete().eq('id', id)
-    if (result.error !== null) {
+    if (result.error) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
     return true

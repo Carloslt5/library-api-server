@@ -31,6 +31,17 @@ jest.mock('@supabase/supabase-js', () => ({
             },
           }
         }),
+        delete: jest.fn((id: string) => {
+          return {
+            eq: (key: keyof Book, value: string) => {
+              const indexToDelete = mockBooks.findIndex((book) => book[key] === value)
+              if (indexToDelete !== -1) {
+                mockBooks.splice(indexToDelete, 1)
+              }
+              return { data: mockBooks }
+            },
+          }
+        }),
       }
     }),
   })),
@@ -53,7 +64,8 @@ describe('BookModel', () => {
   })
 
   it('getById should return a one book', async () => {
-    const result = await bookmodel.getById({ id: mockBooks[0].id })
+    const findBookID = mockBooks[0].id
+    const result = await bookmodel.getById({ id: findBookID })
 
     expect(spyFrom).toHaveBeenCalledWith('books')
     expect(Array.isArray(result)).toBe(true)
@@ -62,6 +74,7 @@ describe('BookModel', () => {
 
   it('createBook should return success request', async () => {
     const result = await bookmodel.createBook({ input: mockBookInput })
+
     expect(spyFrom).toHaveBeenCalledWith('books')
     expect(mockBooks.length).toBe(3)
     expect(mockBooks[2]).toHaveProperty('id')
@@ -69,10 +82,22 @@ describe('BookModel', () => {
   })
 
   it('updateBook should return success request', async () => {
-    const result = await bookmodel.updateBook({ id: mockBooks[0].id, input: updateBookMock })
+    const idToUpdate = mockBooks[0].id
+    const result = await bookmodel.updateBook({ id: idToUpdate, input: updateBookMock })
 
     expect(spyFrom).toHaveBeenCalledWith('books')
+    //To Do expect mockBook[0] is update
     expect(mockBooks.length).toBe(3)
+    expect(result).toBe(true)
+  })
+
+  it('deleteBook should return success request', async () => {
+    const idToDelete = mockBooks[1].id
+    const result = await bookmodel.deleteBook({ id: idToDelete })
+
+    expect(spyFrom).toHaveBeenCalledWith('books')
+    expect(mockBooks.length).toBe(2)
+    expect(mockBooks.map((book) => book.id)).not.toBe(idToDelete)
     expect(result).toBe(true)
   })
 })
