@@ -29,3 +29,12 @@ export const mockBookInput: BookNotID = {
   year: 2011,
   imageURL: 'https://imagenURL.com',
 }
+
+export const updateBookMock: BookNotID = {
+  title: 'Title update mock',
+  author: 'Author update mock',
+  categories: 'Categories update mock',
+  link: 'https://example.com/hitchhikers-guide',
+  year: 1111,
+  imageURL: 'https://imagenURL.com',
+}

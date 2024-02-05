@@ -37,7 +37,7 @@ class BookModel {
 
   async updateBook({ id, input }: { id: BookID; input: BookNotID }): Promise<boolean> {
     const result = await db.from('books').update(input).eq('id', id)
-    if (result.error !== null) {
+    if (result.error) {
       throw new ModelError({ message: result.error.message, status: result.status })
     }
     return true
