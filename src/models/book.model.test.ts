@@ -58,7 +58,7 @@ describe('BookModel', () => {
 
     expect(spyFrom).toHaveBeenCalledWith('books')
     expect(Array.isArray(result)).toBe(true)
-    expect(result).toEqual(mockBooks)
+    expect(result).toStrictEqual(mockBooks)
   })
 
   it('getById should return a one book', async () => {
@@ -67,7 +67,7 @@ describe('BookModel', () => {
 
     expect(spyFrom).toHaveBeenCalledWith('books')
     expect(Array.isArray(result)).toBe(true)
-    expect(result).toEqual([mockBooks[0]])
+    expect(result).toStrictEqual([mockBooks[0]])
   })
 
   it('createBook should return success request', async () => {
@@ -84,7 +84,7 @@ describe('BookModel', () => {
     const result = await bookmodel.updateBook({ id: idToUpdate, input: updateBookMock })
 
     expect(spyFrom).toHaveBeenCalledWith('books')
-    expect([mockBooks[0]]).toEqual([{ id: idToUpdate, ...updateBookMock }])
+    expect([mockBooks[0]]).toStrictEqual([{ id: idToUpdate, ...updateBookMock }])
     expect(mockBooks.length).toBe(3)
     expect(result).toBe(true)
   })
