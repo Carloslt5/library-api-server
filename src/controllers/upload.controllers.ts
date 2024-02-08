@@ -1,7 +1,7 @@
 import { type RequestHandler } from 'express'
 import { db } from '../models/book.model'
 import fs from 'fs/promises'
-import { ModelError } from '../types/ModelError.type'
+import { ModelError } from '../error-handling/ModelError.type'
 
 export const uploadFile: RequestHandler = async (req, res, next) => {
   try {
