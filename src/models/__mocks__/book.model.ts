@@ -13,28 +13,38 @@ class BookModel {
     const id: BookID = crypto.randomUUID()
     const newBook: Book = { id, ...input }
     mockBooks.push(newBook)
-    return mockBooks
+    return true
   }
   async updateBook({ id, input }: { id: BookID; input: BookNotID }) {
     const foundBookIndex = mockBooks.findIndex((book) => book.id === id)
     if (foundBookIndex !== -1) {
       mockBooks[foundBookIndex] = { ...mockBooks[foundBookIndex], ...input }
     }
-    return mockBooks
+    return true
   }
   async deleteBook({ id }: { id: BookID }) {
     const indexToDelete = mockBooks.findIndex((book) => book.id === id)
     if (indexToDelete !== -1) {
       mockBooks.splice(indexToDelete, 1)
     }
-    return mockBooks
+    return true
   }
 }
 
 export const bookmodel = {
-  getAll: jest.fn().mockResolvedValue(mockBooks),
-  getById: jest.fn().mockResolvedValue([mockBooks[0]]),
-  createBook: jest.fn().mockResolvedValue(mockBooks),
-  updateBook: jest.fn().mockResolvedValue(mockBooks),
-  deleteBook: jest.fn().mockResolvedValue(mockBooks),
+  getAll: jest.fn().mockImplementation(() => {
+    return new BookModel().getAll()
+  }),
+  getById: jest.fn().mockImplementation(({ id }: { id: BookID }) => {
+    return new BookModel().getById({ id })
+  }),
+  createBook: jest.fn().mockImplementation(({ input }: { input: BookNotID }) => {
+    return new BookModel().createBook({ input })
+  }),
+  updateBook: jest.fn().mockImplementation(({ id, input }: { id: BookID; input: BookNotID }) => {
+    return new BookModel().updateBook({ id, input })
+  }),
+  deleteBook: jest.fn().mockImplementation(({ id }: { id: BookID }) => {
+    return new BookModel().deleteBook({ id })
+  }),
 }

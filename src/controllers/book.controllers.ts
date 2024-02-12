@@ -24,7 +24,7 @@ export const getById: RequestHandler = async (req, res, next) => {
 export const createBook: RequestHandler = async (req, res, next) => {
   const input: BookNotID = req.body
   try {
-    await bookmodel.createBook({ input })
+    const test = await bookmodel.createBook({ input })
     res.status(200).json({ success: true, message: 'Book created' })
   } catch (error) {
     next(error)
