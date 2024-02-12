@@ -31,4 +31,10 @@ class BookModel {
   }
 }
 
-export const bookmodel = new BookModel()
+export const bookmodel = {
+  getAll: jest.fn().mockResolvedValue(mockBooks),
+  getById: jest.fn().mockResolvedValue([mockBooks[0]]),
+  createBook: jest.fn().mockResolvedValue(mockBooks),
+  updateBook: jest.fn().mockResolvedValue(mockBooks),
+  deleteBook: jest.fn().mockResolvedValue(mockBooks),
+}

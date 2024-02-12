@@ -19,10 +19,9 @@ afterEach(() => {
 describe('Books controllers on successful request', () => {
   it('GET - should call bookmodel.getAll() & return books', async () => {
     const req = {} as Request
-    const spyGetAll = jest.spyOn(bookmodel, 'getAll')
     await getBooks(req, res, next)
 
-    expect(spyGetAll).toHaveBeenCalledTimes(1)
+    expect(bookmodel.getAll).toHaveBeenCalledTimes(1)
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith(mockBooks)
     expect(next).not.toHaveBeenCalled()
@@ -31,11 +30,10 @@ describe('Books controllers on successful request', () => {
   it('GET - should call bookmodel.getById() & return one books by ID', async () => {
     const bookID = mockBooks[0].id
     const req = { params: { id: bookID } } as unknown as Request
-    const spyGetByID = jest.spyOn(bookmodel, 'getById')
     await getById(req, res, next)
 
-    expect(spyGetByID).toHaveBeenCalledTimes(1)
-    expect(spyGetByID).toHaveBeenCalledWith({ id: bookID })
+    expect(bookmodel.getById).toHaveBeenCalledTimes(1)
+    expect(bookmodel.getById).toHaveBeenCalledWith({ id: bookID })
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith([mockBooks[0]])
     expect(next).not.toHaveBeenCalled()
@@ -44,11 +42,10 @@ describe('Books controllers on successful request', () => {
   it('POST - should call bookmodel.createBook()', async () => {
     const createBookID = mockBooks[0].id
     const req = { id: createBookID, body: mockBookInput } as unknown as Request
-    const spyCreateBook = jest.spyOn(bookmodel, 'createBook')
     await createBook(req, res, next)
 
-    expect(spyCreateBook).toHaveBeenCalledTimes(1)
-    expect(spyCreateBook).toHaveBeenCalledWith({ input: mockBookInput })
+    expect(bookmodel.createBook).toHaveBeenCalledTimes(1)
+    expect(bookmodel.createBook).toHaveBeenCalledWith({ input: mockBookInput })
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book created' })
     expect(next).not.toHaveBeenCalled()
@@ -57,11 +54,10 @@ describe('Books controllers on successful request', () => {
   it('PUT - should call bookmodel.updateBook()', async () => {
     const updateBookID = mockBooks[0].id
     const req = { params: { id: updateBookID }, body: updateBookMock } as unknown as Request
-    const spyUpdateBook = jest.spyOn(bookmodel, 'updateBook')
     await updateBook(req, res, next)
 
-    expect(spyUpdateBook).toHaveBeenCalledTimes(1)
-    expect(spyUpdateBook).toHaveBeenCalledWith({ id: updateBookID, input: updateBookMock })
+    expect(bookmodel.updateBook).toHaveBeenCalledTimes(1)
+    expect(bookmodel.updateBook).toHaveBeenCalledWith({ id: updateBookID, input: updateBookMock })
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book updated' })
     expect(next).not.toHaveBeenCalled()
@@ -70,11 +66,10 @@ describe('Books controllers on successful request', () => {
   it('DELETE - should call bookmodel.deleteBook()', async () => {
     const deleteBookID = mockBooks[0].id
     const req = { params: { id: deleteBookID } } as unknown as Request
-    const spyDeleteBook = jest.spyOn(bookmodel, 'deleteBook')
     await deleteBook(req, res, next)
 
-    expect(spyDeleteBook).toHaveBeenCalledTimes(1)
-    expect(spyDeleteBook).toHaveBeenCalledWith({ id: deleteBookID })
+    expect(bookmodel.deleteBook).toHaveBeenCalledTimes(1)
+    expect(bookmodel.deleteBook).toHaveBeenCalledWith({ id: deleteBookID })
     expect(res.status).toHaveBeenCalledWith(200)
     expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book deleted' })
     expect(next).not.toHaveBeenCalled()
