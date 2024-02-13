@@ -26,7 +26,7 @@ class BookModel {
       const query = 'SELECT * FROM books WHERE id = $1'
       const result = await db.query(query, [id])
       if (result.rowCount === 0) {
-        throw new ModelError({ message: 'Book not exist', status: 400 })
+        throw new ModelError({ message: 'Book not found', status: 400 })
       } else {
         return result.rows
       }
@@ -65,7 +65,7 @@ class BookModel {
       const values = [title, author, categories, link, year, imageURL, id]
       const result = await db.query(query, values)
       if (result.rowCount === 0) {
-        throw new ModelError({ message: 'Book not exist', status: 400 })
+        throw new ModelError({ message: 'Book not found', status: 400 })
       } else {
         return true
       }
@@ -82,8 +82,12 @@ class BookModel {
     try {
       const query = 'DELETE FROM books WHERE id = $1'
       const values = [id]
-      await db.query(query, values)
-      return true
+      const result = await db.query(query, values)
+      if (result.rowCount === 0) {
+        throw new ModelError({ message: 'Book not found', status: 400 })
+      } else {
+        return true
+      }
     } catch (error) {
       throw new ModelError({ message: 'Can not delete book', status: 400 })
     }
