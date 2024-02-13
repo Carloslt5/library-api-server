@@ -26,7 +26,7 @@ class BookModel {
       const query = 'SELECT * FROM books WHERE id = $1'
       const result = await db.query(query, [id])
       if (result.rowCount === 0) {
-        throw new ModelError({ message: 'Book dont exist', status: 400 })
+        throw new ModelError({ message: 'Book not exist', status: 400 })
       } else {
         return result.rows
       }
@@ -63,10 +63,18 @@ class BookModel {
         WHERE id = $7 
       `
       const values = [title, author, categories, link, year, imageURL, id]
-      await db.query(query, values)
-      return true
+      const result = await db.query(query, values)
+      if (result.rowCount === 0) {
+        throw new ModelError({ message: 'Book not exist', status: 400 })
+      } else {
+        return true
+      }
     } catch (error) {
-      throw new ModelError({ message: 'Can not update book', status: 400 })
+      if (error instanceof ModelError) {
+        throw error
+      } else {
+        throw new ModelError({ message: 'Can not found this book', status: 400 })
+      }
     }
   }
 
