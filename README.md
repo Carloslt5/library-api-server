@@ -21,7 +21,7 @@ npm start
 - TypeScript
 - Zod schema validation
 - Testing with Jest
-- Supabase (Database and Storage)
+- Supabase (SQL Database and Storage)
 
 ## Books Routes
 
