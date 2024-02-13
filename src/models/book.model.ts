@@ -25,9 +25,17 @@ class BookModel {
     try {
       const query = 'SELECT * FROM books WHERE id = $1'
       const result = await db.query(query, [id])
-      return result.rows
+      if (result.rowCount === 0) {
+        throw new ModelError({ message: 'Book dont exist', status: 400 })
+      } else {
+        return result.rows
+      }
     } catch (error) {
-      throw new ModelError({ message: 'Can not found this book', status: 400 })
+      if (error instanceof ModelError) {
+        throw error
+      } else {
+        throw new ModelError({ message: 'Can not found this book', status: 400 })
+      }
     }
   }
 
