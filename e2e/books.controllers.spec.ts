@@ -1,6 +1,18 @@
 import { test, expect } from '@playwright/test'
+import { mockBookInput } from './../src/const/mockBooks'
 
-test('get started link', async ({ request }) => {
+test('should create book', async ({ request }) => {
+  const createBook = await request.post(`http://localhost:5005/api/books/create`, {
+    data: mockBookInput,
+  })
+
+  expect(createBook.ok()).toBeTruthy()
+  expect(createBook.status()).toBe(200)
+  const responseBody = await createBook.json()
+  expect(responseBody).toStrictEqual({ success: true, message: 'Book created' })
+})
+
+test('should get all books', async ({ request }) => {
   const getAll = await request.get('http://localhost:5005/api/books')
 
   expect(getAll.ok()).toBeTruthy()
