@@ -22,11 +22,11 @@ export const mockBooks: Book[] = [
 ]
 
 export const mockBookInput: BookNotID = {
-  title: 'The Song of Achilles',
-  author: 'Madeline Miller',
-  categories: 'Historical Fiction',
+  title: 'Test Title',
+  author: 'Test Author',
+  categories: 'Test Categorie',
   link: 'https://example.com/song-of-achilles',
-  year: 2011,
+  year: 2000,
   imageURL: 'https://imagenURL.com',
 }
 
