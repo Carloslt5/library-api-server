@@ -5,7 +5,7 @@ CREATE TABLE books (
   categories VARCHAR(255),
   link VARCHAR(255),
   year NUMERIC,
-  imageURL TEXT
+  "imageURL" TEXT
 );
 
 INSERT INTO
@@ -16,7 +16,7 @@ INSERT INTO
     categories,
     link,
     year,
-    imageURL
+    "imageURL"
   )
 VALUES
   (

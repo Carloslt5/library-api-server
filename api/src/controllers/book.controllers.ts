@@ -5,7 +5,7 @@ import { type BookNotID } from '../schema/book.schema'
 export const getBooks: RequestHandler = async (req, res, next) => {
   try {
     const result = await bookmodel.getAll()
-    res.json(result).status(200)
+    res.status(200).json(result)
   } catch (error) {
     next(error)
   }
