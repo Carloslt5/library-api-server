@@ -1,6 +1,8 @@
 [![Node.js CI](https://github.com/Carloslt5/technical-bubbo-api-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/Carloslt5/technical-bubbo-api-server/actions/workflows/node.js.yml)
 
-## technical-bubbo-api-server
+## REST API Server
+
+### Init Server `./api`
 
 1. Install dependencies
 
@@ -11,7 +13,13 @@ npm install
 2. Init api-server
 
 ```
-npm start
+npm run dev
+```
+
+### Init unit test `./api`
+
+```
+npm test
 ```
 
 ## Technologies
@@ -22,6 +30,7 @@ npm start
 - Zod schema validation
 - Testing with Jest
 - Supabase (SQL Database and Storage)
+- Docker
 
 ## Books Routes
 
