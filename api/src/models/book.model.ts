@@ -2,14 +2,22 @@ import { type Book, type BookID, type BookNotID } from '../schema/book.schema'
 import { ModelError } from '../error-handling/ModelError.type'
 import { Pool } from 'pg'
 
-export const db = new Pool({
+const config = {
   host: process.env.DATABASE_HOST,
   database: process.env.DATABASE_NAME,
   port: 5432,
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
-})
+}
+const configDBLocal = {
+  host: 'localhost',
+  database: 'postgres',
+  port: 5432,
+  user: 'postgres',
+  password: 'postgres',
+}
 
+export const db = new Pool(process.env.NODE_ENV === 'test' ? configDBLocal : config)
 class BookModel {
   async getAll(): Promise<any> {
     try {
@@ -40,6 +48,8 @@ class BookModel {
   }
 
   async createBook({ input }: { input: BookNotID }): Promise<boolean> {
+    console.log('---------------', process.env.NODE_ENV)
+
     const id: BookID = crypto.randomUUID()
     const { title, author, categories, link, year, imageURL } = input
     try {
