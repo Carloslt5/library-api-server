@@ -58,7 +58,6 @@ class BookModel {
       await db.query(query, values)
       return true
     } catch (error) {
-      console.log('-----ERROR', error)
       throw new ModelError({ message: 'Can not created book', status: 400 })
     }
   }

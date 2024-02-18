@@ -1,7 +1,12 @@
 import { test, expect } from '@playwright/test'
 import { mockBookInput } from './../src/const/mockBooks'
 
-test.only('should create book', async ({ request }) => {
+test('should create book', async ({ request }) => {
+  const getAllBooksBefore = await request.get('http://localhost:5005/api/books')
+  expect(getAllBooksBefore.ok()).toBeTruthy()
+  const allBooksBefore = await getAllBooksBefore.json()
+  const numBooksBefore = allBooksBefore.length
+
   const createBook = await request.post(`http://localhost:5005/api/books/create`, {
     data: mockBookInput,
   })
@@ -10,8 +15,10 @@ test.only('should create book', async ({ request }) => {
   const responseBody = await createBook.json()
   expect(responseBody).toStrictEqual({ success: true, message: 'Book created' })
 
-  const getAll = await request.get('http://localhost:5005/api/books')
-  expect(getAll.ok()).toBeTruthy()
+  const getAllBooksAfter = await request.get('http://localhost:5005/api/books')
+  expect(getAllBooksAfter.ok()).toBeTruthy()
+  const allBooksAfter = await getAllBooksAfter.json()
+  expect(allBooksAfter.length).toBe(numBooksBefore + 1)
 })
 
 test('should get all books', async ({ request }) => {
