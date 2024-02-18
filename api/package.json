@@ -8,7 +8,7 @@
     "build": "tsc",
     "lint": "eslint",
     "test": "jest --config ./jest.config.js",
-    "test:dev": "jest --config ./jest.config.js --watch",
+    "test:unit": "jest --config ./jest.config.js --watch",
     "test:e2e": "NODE_ENV=test npm run dev & serverPid=$! && sleep 5 && playwright test && kill $serverPid"
   },
   "author": "Carlos Liao",
