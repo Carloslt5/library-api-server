@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { mockBookInput } from './../src/const/mockBooks'
+import { Book, BookID } from '../src/schema/book.schema'
 
 test('should create book', async ({ request }) => {
   const getAllBooksBefore = await request.get('http://localhost:5005/api/books')
@@ -37,4 +38,18 @@ test('should get all books', async ({ request }) => {
     expect(firstBook).toHaveProperty('year')
     expect(firstBook).toHaveProperty('imageURL')
   }
+})
+
+test('should get one books by ID', async ({ request }) => {
+  let findBookByID: Book
+  const getAllBooks = await request.get('http://localhost:5005/api/books')
+  expect(getAllBooks.ok()).toBeTruthy()
+  const allbooks = await getAllBooks.json()
+  findBookByID = allbooks[0]
+
+  const getOneByID = await request.get(`http://localhost:5005/api/books/${findBookByID.id}`)
+  expect(getOneByID.ok()).toBeTruthy()
+  expect(getOneByID.status()).toBe(200)
+  const oneBook = await getOneByID.json()
+  expect(oneBook).toStrictEqual([findBookByID])
 })
