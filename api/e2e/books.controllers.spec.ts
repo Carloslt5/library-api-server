@@ -44,6 +44,7 @@ test('should get one books by ID', async ({ request }) => {
   let findBookByID: Book
   const getAllBooks = await request.get('http://localhost:5005/api/books')
   expect(getAllBooks.ok()).toBeTruthy()
+  expect(getAllBooks.status()).toBe(200)
   const allbooks = await getAllBooks.json()
   findBookByID = allbooks[0]
 
@@ -52,4 +53,27 @@ test('should get one books by ID', async ({ request }) => {
   expect(getOneByID.status()).toBe(200)
   const oneBook = await getOneByID.json()
   expect(oneBook).toStrictEqual([findBookByID])
+})
+
+test('should delete one books by ID', async ({ request }) => {
+  let findBookByID: Book
+  const getAllBooksBefore = await request.get('http://localhost:5005/api/books')
+  expect(getAllBooksBefore.ok()).toBeTruthy()
+  expect(getAllBooksBefore.status()).toBe(200)
+  const allBooksBefore = await getAllBooksBefore.json()
+  findBookByID = allBooksBefore[0]
+  const numBooksBefore = allBooksBefore.length
+
+  const bookToDelete = await request.delete(`http://localhost:5005/api/books/${findBookByID.id}`)
+  expect(bookToDelete.ok()).toBeTruthy()
+  expect(bookToDelete.status()).toBe(200)
+  const responseBody = await bookToDelete.json()
+  expect(responseBody).toStrictEqual({ success: true, message: 'Book deleted' })
+
+  const getAllBooksAfter = await request.get('http://localhost:5005/api/books')
+  expect(getAllBooksAfter.ok()).toBeTruthy()
+  expect(getAllBooksAfter.status()).toBe(200)
+  const allBooksAfter = await getAllBooksAfter.json()
+  expect(allBooksAfter).not.toContainEqual(findBookByID)
+  expect(allBooksAfter.length).toBe(numBooksBefore - 1)
 })
