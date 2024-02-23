@@ -70,7 +70,7 @@ test.only('should update one books by ID', async ({ request }) => {
   expect(updateBookByID.ok()).toBeTruthy()
   expect(updateBookByID.status()).toBe(200)
   const responseBody = await updateBookByID.json()
-  expect(responseBody).toStrictEqual({ success: true, message: 'Book updated' })
+  expect(responseBody).toStrictEqual({ message: 'Book updated' })
 
   const getOneByID = await request.get(`http://localhost:5005/api/books/${findBookByID.id}`)
   expect(getOneByID.ok()).toBeTruthy()
