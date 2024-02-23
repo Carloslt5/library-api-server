@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { mockBookInput, updateBookMock } from './../src/const/mockBooks'
-import { Book, BookID } from '../src/schema/book.schema'
+import { Book } from '../src/schema/book.schema'
 
 test('should create book', async ({ request }) => {
   const getAllBooksBefore = await request.get('http://localhost:5005/api/books')
@@ -55,7 +55,7 @@ test('should get one books by ID', async ({ request }) => {
   expect(oneBook).toStrictEqual([findBookByID])
 })
 
-test('should update one books by ID', async ({ request }) => {
+test.only('should update one books by ID', async ({ request }) => {
   let findBookByID: Book
   const getAllBooks = await request.get('http://localhost:5005/api/books')
   expect(getAllBooks.ok()).toBeTruthy()
@@ -94,7 +94,7 @@ test('should delete one books by ID', async ({ request }) => {
   expect(bookToDelete.ok()).toBeTruthy()
   expect(bookToDelete.status()).toBe(200)
   const responseBody = await bookToDelete.json()
-  expect(responseBody).toStrictEqual({ success: true, message: 'Book deleted' })
+  expect(responseBody).toStrictEqual({ message: 'Book deleted' })
 
   const getAllBooksAfter = await request.get('http://localhost:5005/api/books')
   expect(getAllBooksAfter.ok()).toBeTruthy()

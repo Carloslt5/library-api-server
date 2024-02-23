@@ -12,8 +12,7 @@ describe('BookModel', () => {
     const result = await bookmodel.getAll()
 
     expect(bookmodel.getAll).toHaveBeenCalledTimes(1)
-    expect(Array.isArray(result)).toBe(true)
-    expect(result).toStrictEqual(mockBooks)
+    expect(result).toStrictEqual({ rows: mockBooks })
   })
 
   it('getById should return a one book', async () => {
@@ -22,8 +21,7 @@ describe('BookModel', () => {
 
     expect(bookmodel.getById).toHaveBeenCalledTimes(1)
     expect(bookmodel.getById).toHaveBeenCalledWith({ id: findBookID })
-    expect(Array.isArray(result)).toBe(true)
-    expect(result).toStrictEqual([mockBooks[0]])
+    expect(result).toStrictEqual({ rows: [mockBooks[0]] })
   })
 
   it('createBook should return success request', async () => {
@@ -54,7 +52,7 @@ describe('BookModel', () => {
 
   it('deleteBook should return success request', async () => {
     const idToDelete = mockBooks[1].id
-    const result = await bookmodel.deleteBook({ id: idToDelete })
+    const result = await bookmodel.delete({ id: idToDelete })
 
     expect(mockBooks.length).toBe(2)
     expect(mockBooks.map((book) => book.id)).not.toBe(idToDelete)

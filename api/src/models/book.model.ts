@@ -1,50 +1,32 @@
 import { type Book, type BookID, type BookNotID } from '../schema/book.schema'
 import { ModelError } from '../error-handling/ModelError.type'
-import { Pool } from 'pg'
+import { type QueryResult, Pool } from 'pg'
 
-const config = {
-  host: process.env.DATABASE_HOST,
-  database: process.env.DATABASE_NAME,
-  port: 5432,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-}
-const configDBLocal = {
-  host: 'localhost',
-  database: 'postgres',
-  port: 5432,
-  user: 'postgres',
-  password: 'postgres',
-}
+const config =
+  process.env.NODE_ENV === 'test'
+    ? {
+        host: 'localhost',
+        database: 'postgres',
+        port: 5432,
+        user: 'postgres',
+        password: 'postgres',
+      }
+    : {
+        host: process.env.DATABASE_HOST,
+        database: process.env.DATABASE_NAME,
+        port: 5432,
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+      }
 
-export const db = new Pool(process.env.NODE_ENV === 'test' ? configDBLocal : config)
+export const db = new Pool(config)
 class BookModel {
-  async getAll(): Promise<Book[]> {
-    try {
-      const query = 'SELECT * FROM books'
-      const result = await db.query(query)
-      return result.rows
-    } catch (error) {
-      throw new ModelError({ message: 'Can not found books', status: 400 })
-    }
+  async getAll(): Promise<QueryResult<Book[]>> {
+    return await db.query('SELECT * FROM books')
   }
 
-  async getById({ id }: { id: BookID }): Promise<Book[]> {
-    try {
-      const query = 'SELECT * FROM books WHERE id = $1'
-      const result = await db.query(query, [id])
-      if (result.rowCount === 0) {
-        throw new ModelError({ message: 'Book not found', status: 400 })
-      } else {
-        return result.rows
-      }
-    } catch (error) {
-      if (error instanceof ModelError) {
-        throw error
-      } else {
-        throw new ModelError({ message: 'Can not found this book', status: 400 })
-      }
-    }
+  async getById({ id }: { id: BookID }): Promise<QueryResult<Book[]>> {
+    return await db.query('SELECT * FROM books WHERE id = $1', [id])
   }
 
   async createBook({ input }: { input: BookNotID }): Promise<boolean> {
@@ -86,19 +68,8 @@ class BookModel {
     }
   }
 
-  async deleteBook({ id }: { id: BookID }): Promise<boolean> {
-    try {
-      const query = 'DELETE FROM books WHERE id = $1'
-      const values = [id]
-      const result = await db.query(query, values)
-      if (result.rowCount === 0) {
-        throw new ModelError({ message: 'Book not found', status: 400 })
-      } else {
-        return true
-      }
-    } catch (error) {
-      throw new ModelError({ message: 'Can not delete book', status: 400 })
-    }
+  async delete({ id }: { id: BookID }): Promise<void> {
+    await db.query('DELETE FROM books WHERE id = $1', [id])
   }
 }
 

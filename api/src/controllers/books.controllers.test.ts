@@ -68,10 +68,10 @@ describe('Books controllers on successful request', () => {
     const req = { params: { id: deleteBookID } } as unknown as Request
     await deleteBook(req, res, next)
 
-    expect(bookmodel.deleteBook).toHaveBeenCalledTimes(1)
-    expect(bookmodel.deleteBook).toHaveBeenCalledWith({ id: deleteBookID })
+    expect(bookmodel.delete).toHaveBeenCalledTimes(1)
+    expect(bookmodel.delete).toHaveBeenCalledWith({ id: deleteBookID })
     expect(res.status).toHaveBeenCalledWith(200)
-    expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book deleted' })
+    expect(res.json).toHaveBeenCalledWith({ message: 'Book deleted' })
     expect(next).not.toHaveBeenCalled()
   })
 })
@@ -127,12 +127,12 @@ describe('Books controllers on bad request', () => {
   it('DELETE - .deleteBook call next() on bad request', async () => {
     const deleteBookID = mockBooks[0].id
     const req = { params: { id: deleteBookID } } as unknown as Request
-    bookmodel.deleteBook = jest.fn(() => {
+    bookmodel.delete = jest.fn(() => {
       throw new Error()
     })
     await deleteBook(req, res, next)
 
-    expect(bookmodel.deleteBook).toHaveBeenCalledTimes(1)
+    expect(bookmodel.delete).toHaveBeenCalledTimes(1)
     expect(next).toHaveBeenCalledWith(expect.any(Error))
   })
 })

@@ -1,21 +1,26 @@
 import { type RequestHandler } from 'express'
 import { bookmodel } from '../models/book.model'
 import { type BookNotID } from '../schema/book.schema'
+import { ModelError } from '../error-handling/ModelError.type'
 
 export const getBooks: RequestHandler = async (req, res, next) => {
   try {
-    const result = await bookmodel.getAll()
-    res.status(200).json(result)
+    const data = await bookmodel.getAll()
+    data.rowCount === 0
+      ? res.status(404).json({ message: 'Books not found' })
+      : res.status(200).json(data.rows)
   } catch (error) {
     next(error)
   }
 }
 
 export const getById: RequestHandler = async (req, res, next) => {
-  const { id } = req.params
   try {
+    const { id } = req.params
     const result = await bookmodel.getById({ id })
-    res.status(200).json(result)
+    result.rowCount === 0
+      ? res.status(404).json({ message: 'Book not found' })
+      : res.status(200).json(result.rows)
   } catch (error) {
     next(error)
   }
@@ -45,8 +50,8 @@ export const updateBook: RequestHandler = async (req, res, next) => {
 export const deleteBook: RequestHandler = async (req, res, next) => {
   const { id } = req.params
   try {
-    await bookmodel.deleteBook({ id })
-    res.status(200).json({ success: true, message: 'Book deleted' })
+    await bookmodel.delete({ id })
+    res.status(200).json({ message: 'Book deleted' })
   } catch (error) {
     next(error)
   }
