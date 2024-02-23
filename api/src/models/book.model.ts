@@ -1,5 +1,4 @@
 import { type Book, type BookID, type BookNotID } from '../schema/book.schema'
-import { ModelError } from '../error-handling/ModelError.type'
 import { type QueryResult, Pool } from 'pg'
 
 const config =
@@ -29,43 +28,26 @@ class BookModel {
     return await db.query('SELECT * FROM books WHERE id = $1', [id])
   }
 
-  async createBook({ input }: { input: BookNotID }): Promise<boolean> {
+  async create({ input }: { input: BookNotID }): Promise<QueryResult<Book[]>> {
     const id: BookID = crypto.randomUUID()
     const { title, author, categories, link, year, imageURL } = input
-    try {
-      const query = `
-      INSERT INTO books (id, title, author, categories, link, year, "imageURL")
-      VALUES ($1, $2, $3, $4, $5, $6, $7)`
-      const values = [id, title, author, categories, link, year, imageURL]
-      await db.query(query, values)
-      return true
-    } catch (error) {
-      throw new ModelError({ message: 'Can not created book', status: 400 })
-    }
+    const query = `
+    INSERT INTO books (id, title, author, categories, link, year, "imageURL")
+    VALUES ($1, $2, $3, $4, $5, $6, $7)`
+    const values = [id, title, author, categories, link, year, imageURL]
+    return await db.query(query, values)
   }
 
-  async updateBook({ id, input }: { id: BookID; input: BookNotID }): Promise<boolean> {
+  async update({ id, input }: { id: BookID; input: BookNotID }): Promise<QueryResult<Book[]>> {
     const { title, author, categories, link, year, imageURL } = input
-    try {
-      const query = `
-        UPDATE books
-        SET title = $1, author = $2, categories = $3, link = $4, year = $5, "imageURL" = $6
-        WHERE id = $7 
+    return await db.query(
       `
-      const values = [title, author, categories, link, year, imageURL, id]
-      const result = await db.query(query, values)
-      if (result.rowCount === 0) {
-        throw new ModelError({ message: 'Book not found', status: 400 })
-      } else {
-        return true
-      }
-    } catch (error) {
-      if (error instanceof ModelError) {
-        throw error
-      } else {
-        throw new ModelError({ message: 'Can not found this book', status: 400 })
-      }
-    }
+    UPDATE books
+    SET title = $1, author = $2, categories = $3, link = $4, year = $5, "imageURL" = $6
+    WHERE id = $7 
+  `,
+      [title, author, categories, link, year, imageURL, id],
+    )
   }
 
   async delete({ id }: { id: BookID }): Promise<void> {
