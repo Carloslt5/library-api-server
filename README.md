@@ -64,7 +64,7 @@ Base URL `/api/books`
 | GET         | `/:id`        | Get one book details |
 | POST        | `/create`     | Create a new book    |
 | PUT         | `/edit/:id`   | Edit book            |
-| DELETE      | `/delete/:id` | Add your favourites  |
+| DELETE      | `/delete/:id` | Delete book by ID    |
 
 ## Upload File Routes
 
