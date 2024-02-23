@@ -2,6 +2,13 @@
 
 ## REST API Server
 
+### Requirements
+
+```
+ Docker (only test end to end)
+ Node v20.0.0
+```
+
 ### Init Server `./api`
 
 1. Install dependencies
@@ -22,13 +29,28 @@ npm run dev
 npm test
 ```
 
+### Init end-to-end test `./`
+
+1. Init db test with Docker `./`
+
+```
+docker-compose up
+```
+
+2. Run test end to end `./api`
+
+```
+npm run test:e2e
+```
+
 ## Technologies
 
-- Nodejs
+- NodeJS
 - ExpressJS
 - TypeScript
 - Zod schema validation
-- Testing with Jest
+- Testing with Jest (unit test)
+- Testing with playwright (end to end test)
 - Supabase (SQL Database and Storage)
 - Docker
 
