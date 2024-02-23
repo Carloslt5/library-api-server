@@ -25,10 +25,10 @@ describe('BookModel', () => {
   })
 
   it('createBook should return success request', async () => {
-    const result = await bookmodel.createBook({ input: mockBookInput })
+    const result = await bookmodel.create({ input: mockBookInput })
 
-    expect(bookmodel.createBook).toHaveBeenCalledTimes(1)
-    expect(bookmodel.createBook).toHaveBeenCalledWith({ input: mockBookInput })
+    expect(bookmodel.create).toHaveBeenCalledTimes(1)
+    expect(bookmodel.create).toHaveBeenCalledWith({ input: mockBookInput })
     expect(mockBooks.length).toBe(3)
     const newBook = mockBooks[mockBooks.length - 1]
     expect(newBook).toHaveProperty('id')
@@ -43,7 +43,7 @@ describe('BookModel', () => {
 
   it('updateBook should return success request', async () => {
     const idToUpdate = mockBooks[0].id
-    const result = await bookmodel.updateBook({ id: idToUpdate, input: updateBookMock })
+    const result = await bookmodel.update({ id: idToUpdate, input: updateBookMock })
 
     expect([mockBooks[0]]).toStrictEqual([{ id: idToUpdate, ...updateBookMock }])
     expect(mockBooks.length).toBe(3)

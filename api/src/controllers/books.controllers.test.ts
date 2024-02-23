@@ -44,10 +44,10 @@ describe('Books controllers on successful request', () => {
     const req = { id: createBookID, body: mockBookInput } as unknown as Request
     await createBook(req, res, next)
 
-    expect(bookmodel.createBook).toHaveBeenCalledTimes(1)
-    expect(bookmodel.createBook).toHaveBeenCalledWith({ input: mockBookInput })
+    expect(bookmodel.create).toHaveBeenCalledTimes(1)
+    expect(bookmodel.create).toHaveBeenCalledWith({ input: mockBookInput })
     expect(res.status).toHaveBeenCalledWith(200)
-    expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book created' })
+    expect(res.json).toHaveBeenCalledWith({ message: 'Book created' })
     expect(next).not.toHaveBeenCalled()
   })
 
@@ -56,10 +56,10 @@ describe('Books controllers on successful request', () => {
     const req = { params: { id: updateBookID }, body: updateBookMock } as unknown as Request
     await updateBook(req, res, next)
 
-    expect(bookmodel.updateBook).toHaveBeenCalledTimes(1)
-    expect(bookmodel.updateBook).toHaveBeenCalledWith({ id: updateBookID, input: updateBookMock })
+    expect(bookmodel.update).toHaveBeenCalledTimes(1)
+    expect(bookmodel.update).toHaveBeenCalledWith({ id: updateBookID, input: updateBookMock })
     expect(res.status).toHaveBeenCalledWith(200)
-    expect(res.json).toHaveBeenCalledWith({ success: true, message: 'Book updated' })
+    expect(res.json).toHaveBeenCalledWith({ message: 'Book updated' })
     expect(next).not.toHaveBeenCalled()
   })
 
@@ -103,24 +103,24 @@ describe('Books controllers on bad request', () => {
   it('POST - .createBook call next() on bad request', async () => {
     const createBookID = mockBooks[0].id
     const req = { params: { id: createBookID }, body: mockBookInput } as unknown as Request
-    bookmodel.createBook = jest.fn(() => {
+    bookmodel.create = jest.fn(() => {
       throw new Error()
     })
     await createBook(req, res, next)
 
-    expect(bookmodel.createBook).toHaveBeenCalledTimes(1)
+    expect(bookmodel.create).toHaveBeenCalledTimes(1)
     expect(next).toHaveBeenCalledWith(expect.any(Error))
   })
 
   it('PUT - .updateBook call next() on bad request', async () => {
     const updateBookID = mockBooks[0].id
     const req = { params: { id: updateBookID }, body: updateBookMock } as unknown as Request
-    bookmodel.updateBook = jest.fn(() => {
+    bookmodel.update = jest.fn(() => {
       throw new Error()
     })
     await updateBook(req, res, next)
 
-    expect(bookmodel.updateBook).toHaveBeenCalledTimes(1)
+    expect(bookmodel.update).toHaveBeenCalledTimes(1)
     expect(next).toHaveBeenCalledWith(expect.any(Error))
   })
 

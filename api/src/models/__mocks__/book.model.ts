@@ -9,13 +9,13 @@ export const bookmodel = {
     const foundBook = mockBooks.find((book) => book.id === id)
     return { rows: [foundBook] }
   }),
-  createBook: jest.fn().mockImplementation(({ input }: { input: BookNotID }) => {
+  create: jest.fn().mockImplementation(({ input }: { input: BookNotID }) => {
     const id: BookID = crypto.randomUUID()
     const newBook: Book = { id, ...input }
     mockBooks.push(newBook)
     return true
   }),
-  updateBook: jest.fn().mockImplementation(({ id, input }: { id: BookID; input: BookNotID }) => {
+  update: jest.fn().mockImplementation(({ id, input }: { id: BookID; input: BookNotID }) => {
     const foundBookIndex = mockBooks.findIndex((book) => book.id === id)
     if (foundBookIndex !== -1) {
       mockBooks[foundBookIndex] = { ...mockBooks[foundBookIndex], ...input }
