@@ -19,7 +19,7 @@ const configDBLocal = {
 
 export const db = new Pool(process.env.NODE_ENV === 'test' ? configDBLocal : config)
 class BookModel {
-  async getAll(): Promise<any> {
+  async getAll(): Promise<Book[]> {
     try {
       const query = 'SELECT * FROM books'
       const result = await db.query(query)
