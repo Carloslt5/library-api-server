@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction, type Express } from 'express'
-import { ModelError } from './ModelError.type'
+import { HTTPError } from './HTTPError'
 
 export default (app: Express): void => {
   app.use((req, res, next) => {
@@ -9,7 +9,7 @@ export default (app: Express): void => {
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error('ERROR', req.method, req.path, err)
 
-    if (err instanceof ModelError) {
+    if (err instanceof HTTPError) {
       res.status(err.status).json({ status: err.status, message: err.message })
       return
     }
