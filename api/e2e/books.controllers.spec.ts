@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { mockBookInput } from './../src/const/mockBooks'
+import { mockBookInput, updateBookMock } from './../src/const/mockBooks'
 import { Book, BookID } from '../src/schema/book.schema'
 
 test('should create book', async ({ request }) => {
@@ -53,6 +53,32 @@ test('should get one books by ID', async ({ request }) => {
   expect(getOneByID.status()).toBe(200)
   const oneBook = await getOneByID.json()
   expect(oneBook).toStrictEqual([findBookByID])
+})
+
+test('should update one books by ID', async ({ request }) => {
+  let findBookByID: Book
+  const getAllBooks = await request.get('http://localhost:5005/api/books')
+  expect(getAllBooks.ok()).toBeTruthy()
+  expect(getAllBooks.status()).toBe(200)
+  const allbooks = await getAllBooks.json()
+  findBookByID = allbooks[0]
+
+  const updateBookByID = await request.put(
+    `http://localhost:5005/api/books/edit/${findBookByID.id}`,
+    { data: updateBookMock },
+  )
+  expect(updateBookByID.ok()).toBeTruthy()
+  expect(updateBookByID.status()).toBe(200)
+  const responseBody = await updateBookByID.json()
+  expect(responseBody).toStrictEqual({ success: true, message: 'Book updated' })
+
+  const getOneByID = await request.get(`http://localhost:5005/api/books/${findBookByID.id}`)
+  expect(getOneByID.ok()).toBeTruthy()
+  expect(getOneByID.status()).toBe(200)
+  const [updatedBook] = await getOneByID.json()
+  updatedBook.year = parseInt(updatedBook.year)
+  const expectedUpdatedBook = { id: findBookByID.id, ...updateBookMock }
+  expect([updatedBook]).toStrictEqual([expectedUpdatedBook])
 })
 
 test('should delete one books by ID', async ({ request }) => {
