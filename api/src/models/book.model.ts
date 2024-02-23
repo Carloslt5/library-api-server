@@ -50,8 +50,8 @@ class BookModel {
     )
   }
 
-  async delete({ id }: { id: BookID }): Promise<void> {
-    await db.query('DELETE FROM books WHERE id = $1', [id])
+  async delete({ id }: { id: BookID }): Promise<QueryResult<Book[]>> {
+    return await db.query('DELETE FROM books WHERE id = $1', [id])
   }
 }
 
