@@ -31,11 +31,12 @@ class BookModel {
   async create({ input }: { input: BookNotID }): Promise<QueryResult<Book[]>> {
     const id: BookID = crypto.randomUUID()
     const { title, author, categories, link, year, imageURL } = input
-    const query = `
+    return await db.query(
+      `
     INSERT INTO books (id, title, author, categories, link, year, "imageURL")
-    VALUES ($1, $2, $3, $4, $5, $6, $7)`
-    const values = [id, title, author, categories, link, year, imageURL]
-    return await db.query(query, values)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [id, title, author, categories, link, year, imageURL],
+    )
   }
 
   async update({ id, input }: { id: BookID; input: BookNotID }): Promise<QueryResult<Book[]>> {
