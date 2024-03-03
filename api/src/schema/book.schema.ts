@@ -1,7 +1,7 @@
 import z from 'zod'
 
 const bookID = {
-  id: z.string().uuid(),
+  id: z.string(),
 }
 
 const bookProperties = {
