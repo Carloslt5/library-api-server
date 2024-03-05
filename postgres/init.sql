@@ -4,7 +4,7 @@ CREATE TABLE books (
   author VARCHAR(255),
   categories VARCHAR(255),
   link VARCHAR(255),
-  year NUMERIC,
+  year SMALLINT,
   "imageURL" TEXT
 );
 
