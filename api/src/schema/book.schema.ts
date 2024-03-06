@@ -1,4 +1,5 @@
 import z from 'zod'
+const urlPattern = /^((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)$/
 
 const bookID = {
   id: z.string(),
@@ -8,8 +9,11 @@ const bookProperties = {
   author: z.string().min(5, 'Author requires a minimum of 5 characters').trim(),
   categories: z.string().trim(),
   imageURL: z.string().url().trim(),
-  link: z.string().url({ message: 'link must be a valid URL' }).trim(),
-  title: z.string().min(1, 'Title requires a minimum of 1 characters').trim(),
+  link: z
+    .string()
+    .regex(urlPattern, { message: 'Link must be a valid URL. Example: www.google.com' })
+    .trim(),
+  title: z.string().min(2, 'Title requires a minimum of 2 characters').trim(),
   year: z.number().int().positive(),
 }
 
