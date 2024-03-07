@@ -35,7 +35,7 @@ export const createBook: RequestHandler = async (req, res, next) => {
     if (result.rowCount === 0) {
       throw new HTTPError(404, 'Book not created')
     } else {
-      res.status(200).json({ message: 'Book created' })
+      res.status(200).json({ status: true, message: 'Book created' })
     }
   } catch (error) {
     next(error)
@@ -50,7 +50,7 @@ export const updateBook: RequestHandler = async (req, res, next) => {
     if (result.rowCount === 0) {
       throw new HTTPError(404, 'Book can not update')
     } else {
-      res.status(200).json({ message: 'Book updated' })
+      res.status(200).json({ status: true, message: 'Book updated' })
     }
   } catch (error) {
     next(error)

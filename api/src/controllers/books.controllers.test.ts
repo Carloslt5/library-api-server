@@ -47,7 +47,7 @@ describe('Books controllers on successful request', () => {
     expect(bookmodel.create).toHaveBeenCalledTimes(1)
     expect(bookmodel.create).toHaveBeenCalledWith({ input: mockBookInput })
     expect(res.status).toHaveBeenCalledWith(200)
-    expect(res.json).toHaveBeenCalledWith({ message: 'Book created' })
+    expect(res.json).toHaveBeenCalledWith({ status: true, message: 'Book created' })
     expect(next).not.toHaveBeenCalled()
   })
 
@@ -59,7 +59,7 @@ describe('Books controllers on successful request', () => {
     expect(bookmodel.update).toHaveBeenCalledTimes(1)
     expect(bookmodel.update).toHaveBeenCalledWith({ id: updateBookID, input: updateBookMock })
     expect(res.status).toHaveBeenCalledWith(200)
-    expect(res.json).toHaveBeenCalledWith({ message: 'Book updated' })
+    expect(res.json).toHaveBeenCalledWith({ status: true, message: 'Book updated' })
     expect(next).not.toHaveBeenCalled()
   })
 

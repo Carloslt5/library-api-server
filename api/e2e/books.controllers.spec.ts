@@ -14,7 +14,7 @@ test('should create book', async ({ request }) => {
   expect(createBook.ok()).toBeTruthy()
   expect(createBook.status()).toBe(200)
   const responseBody = await createBook.json()
-  expect(responseBody).toStrictEqual({ success: true, message: 'Book created' })
+  expect(responseBody).toStrictEqual({ status: true, message: 'Book created' })
 
   const getAllBooksAfter = await request.get('http://localhost:5005/api/books')
   expect(getAllBooksAfter.ok()).toBeTruthy()
@@ -55,7 +55,7 @@ test('should get one books by ID', async ({ request }) => {
   expect(oneBook).toStrictEqual([findBookByID])
 })
 
-test.only('should update one books by ID', async ({ request }) => {
+test('should update one books by ID', async ({ request }) => {
   let findBookByID: Book
   const getAllBooks = await request.get('http://localhost:5005/api/books')
   expect(getAllBooks.ok()).toBeTruthy()
@@ -70,7 +70,7 @@ test.only('should update one books by ID', async ({ request }) => {
   expect(updateBookByID.ok()).toBeTruthy()
   expect(updateBookByID.status()).toBe(200)
   const responseBody = await updateBookByID.json()
-  expect(responseBody).toStrictEqual({ message: 'Book updated' })
+  expect(responseBody).toStrictEqual({ status: true, message: 'Book updated' })
 
   const getOneByID = await request.get(`http://localhost:5005/api/books/${findBookByID.id}`)
   expect(getOneByID.ok()).toBeTruthy()
