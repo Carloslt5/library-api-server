@@ -21,7 +21,7 @@ const config =
 export const db = new Pool(config)
 class BookModel {
   async getAll(): Promise<QueryResult<Book[]>> {
-    return await db.query('SELECT * FROM books')
+    return await db.query('SELECT id, title, author, categories, "imageURL" FROM books')
   }
 
   async getById({ id }: { id: BookID }): Promise<QueryResult<Book[]>> {
