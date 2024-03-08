@@ -33,6 +33,7 @@ test('should get all books', async ({ request }) => {
     const firstBook = responseData[0]
     expect(firstBook).toHaveProperty('title')
     expect(firstBook).toHaveProperty('author')
+    expect(firstBook).toHaveProperty('description')
     expect(firstBook).toHaveProperty('categories')
     expect(firstBook).toHaveProperty('link')
     expect(firstBook).toHaveProperty('year')

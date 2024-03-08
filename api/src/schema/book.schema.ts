@@ -8,6 +8,7 @@ const bookID = {
 const bookProperties = {
   author: z.string().min(5, 'Author requires a minimum of 5 characters').trim(),
   categories: z.string().trim(),
+  description: z.string(),
   imageURL: z.string().url().trim(),
   link: z
     .string()

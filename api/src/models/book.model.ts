@@ -30,24 +30,24 @@ class BookModel {
 
   async create({ input }: { input: BookNotID }): Promise<QueryResult<Book[]>> {
     const id: BookID = crypto.randomUUID()
-    const { title, author, categories, link, year, imageURL } = input
+    const { title, author, description, categories, link, year, imageURL } = input
     return await db.query(
       `
-    INSERT INTO books (id, title, author, categories, link, year, "imageURL")
-    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [id, title, author, categories, link, year, imageURL],
+    INSERT INTO books (id, title, author,description, categories, link, year, "imageURL")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [id, title, author, description, categories, link, year, imageURL],
     )
   }
 
   async update({ id, input }: { id: BookID; input: BookNotID }): Promise<QueryResult<Book[]>> {
-    const { title, author, categories, link, year, imageURL } = input
+    const { title, author, description, categories, link, year, imageURL } = input
     return await db.query(
       `
     UPDATE books
-    SET title = $1, author = $2, categories = $3, link = $4, year = $5, "imageURL" = $6
-    WHERE id = $7 
+    SET title = $1, author = $2, description = $3, categories = $4, link = $5, year = $6, "imageURL" = $7
+    WHERE id = $8 
   `,
-      [title, author, categories, link, year, imageURL, id],
+      [title, author, description, categories, link, year, imageURL, id],
     )
   }
 
