@@ -23,13 +23,13 @@ INSERT INTO
 VALUES
   (
     '46610b86-8b18-4f92-884d-011974aaf7db',
-    'Harry Potter and the Philosopher''s Stone',
-    'J.K. Rowling',
-    'Harry Potter and the Philosopher''s Stone is the first novel in the Harry Potter series written by J.K. Rowling. The story follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to the Hogwarts School of Witchcraft and Wizardry. Harry makes close friends and a few enemies during his first year at the school, and with the help of his friends, Harry faces an attempted comeback by the dark wizard Lord Voldemort, who killed Harry''s parents, but failed to kill Harry when he was just a baby.',
-    'Fantasy',
-    'https://es.wikipedia.org/wiki/Harry_Potter_y_la_piedra_filosofal',
-    1997,
-    'https://onhfqcltzuwwklasplnd.supabase.co/storage/v1/object/public/books/public/imageData-1708098904089-481096129'
+    'Twenty Love Poems and a Song of Despair',
+    'Pablo Neruda ',
+    'Twenty Love Poems and a Song of Despair (Spanish: Veinte poemas de amor y una canción desesperada) is a poetry collection by the Chilean poet Pablo Neruda. Published in June 1924, the book launched Neruda to fame at the young age of 19 and is one of the most renowned literary works of the 20th century in the Spanish language. The book has been translated into many languages; in English, the translation was made by poet W. S. Merwin in 1969.',
+    'Poetry',
+    'https://es.wikipedia.org/wiki/Veinte_poemas_de_amor_y_una_canci%C3%B3n_desesperada',
+    1924,
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Neruda_-_Portada_Veinte_poemas_de_Amor_%281924%29.jpg/440px-Neruda_-_Portada_Veinte_poemas_de_Amor_%281924%29.jpg'
   ),
   (
     'd8e51b10-215f-4ec1-b97f-63f9c9d9c234',
